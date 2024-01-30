@@ -23,15 +23,6 @@ class AccountListAPI(APIView):
         order_by = serializers.CharField(required=False)
         id = serializers.IntegerField(required=False)
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            allowed_fields = set(self.fields.keys())
-            invalid_fields = set(self.initial_data.keys()) - allowed_fields
-            if invalid_fields:
-                raise serializers.ValidationError(
-                    f"Invalid fields: {','.join(invalid_fields)}"
-                )
-
     class OutputSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         account_number = serializers.CharField()
@@ -98,15 +89,6 @@ class TransactionListAPI(APIView):
     class FilterSerializer(serializers.Serializer):
         order_by = serializers.CharField(required=False)
         id = serializers.IntegerField(required=False)
-
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            allowed_fields = set(self.fields.keys())
-            invalid_fields = set(self.initial_data.keys()) - allowed_fields
-            if invalid_fields:
-                raise serializers.ValidationError(
-                    f"Invalid fields: {','.join(invalid_fields)}"
-                )
 
     class OutputSerializer(serializers.Serializer):
         id = serializers.IntegerField()
