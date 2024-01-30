@@ -12,7 +12,9 @@ class Account(BaseModel):
     def balance(self):
         debit_total = self.transactions.filter(debit_amount__isnull=False).aggregate(models.Sum('debit_amount')).get('debit_amount__sum', 0)
         credit_total = self.transactions.filter(credit_amount__isnull=False).aggregate(models.Sum('credit_amount')).get('credit_amount__sum', 0)
-        return credit_total - debit_total
+
+        return (debit_total or 0) - (credit_total or 0)
+
 
     def __str__(self):
         return self.account_name
