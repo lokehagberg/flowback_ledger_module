@@ -11,9 +11,9 @@ from .views import (AccountListAPI,
 
 ledger_patterns = [
     path('account/list', AccountListAPI.as_view(), name='ledger_list'),
-    path('/account/create', AccountCreateAPI.as_view(), name='ledger_create'),
-    path('/account/<int:account_id>/update', AccountUpdateApi.as_view(), name='ledger_update'),
-    path('/account/<int:account_id>/delete', AccountDeleteAPI.as_view(), name='ledger_delete'),
+    path('account/create', AccountCreateAPI.as_view(), name='ledger_create'),
+    path('account/<int:account_id>/update', AccountUpdateApi.as_view(), name='ledger_update'),
+    path('account/<int:account_id>/delete', AccountDeleteAPI.as_view(), name='ledger_delete'),
 
     path('transactions/list', TransactionListAPI.as_view(), name='ledger_transactions_list'),
     path('account/<int:account_id>/transactions/create',
