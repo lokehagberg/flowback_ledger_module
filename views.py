@@ -34,7 +34,7 @@ class AccountListAPI(APIView):
         serializer = self.FilterSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
-        accounts = account_list(user_id=request.user.id,
+        accounts = account_list(user=request.user,
                                 filters=serializer.validated_data)
 
         return get_paginated_response(pagination_class=self.Pagination,
@@ -106,7 +106,7 @@ class TransactionListAPI(APIView):
         serializer = self.FilterSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
-        transactions = transaction_list(filters=serializer.validated_data)
+        transactions = transaction_list(filters=serializer.validated_data, user=request.user)
 
         return get_paginated_response(pagination_class=self.Pagination,
                                       serializer_class=self.OutputSerializer,
