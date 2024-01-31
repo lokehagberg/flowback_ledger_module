@@ -4,6 +4,7 @@ from django.utils import timezone
 from flowback.common.models import BaseModel
 from flowback.user.models import User
 
+
 class Account(BaseModel):
     account_number = models.CharField(max_length=20)
     account_name = models.CharField(max_length=100)
@@ -15,9 +16,9 @@ class Account(BaseModel):
 
         return (debit_total or 0) - (credit_total or 0)
 
-
     def __str__(self):
         return self.account_name
+
 
 class Transaction(BaseModel):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
