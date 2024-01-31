@@ -30,8 +30,8 @@ class BaseTransactionFilter(django_filters.FilterSet):
         model = Transaction
         fields = dict(id=['exact'],)
 
-def transaction_list(*, account_id: int, filters=None):
+def transaction_list(*, filters=None):
     filters = filters or {}
 
-    qs = Transaction.objects.filter(account_id=account_id).all()
+    qs = Transaction.objects.filter().all()
     return BaseTransactionFilter(filters, qs).qs

@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from flowback_addon.ledger.models import Account, Transaction
 from flowback_addon.ledger.selectors import account_list, transaction_list
+from flowback_addon.ledger.serializers import AccountSerializer
 
 from flowback_addon.ledger.services import (account_create,
                                       account_update,
@@ -87,10 +88,13 @@ class TransactionListAPI(APIView):
         max_limit = 100
 
     class FilterSerializer(serializers.Serializer):
+        account_id = serializers.IntegerField(required=False)
         order_by = serializers.CharField(required=False)
         id = serializers.IntegerField(required=False)
 
     class OutputSerializer(serializers.Serializer):
+        account = AccountSerializer()
+
         id = serializers.IntegerField()
         debit_amount = serializers.FloatField()
         credit_amount = serializers.FloatField()
@@ -98,12 +102,11 @@ class TransactionListAPI(APIView):
         verification_number = serializers.CharField()
         date = serializers.DateTimeField()
 
-    def get(self, request, account_id: int):
+    def get(self, request):
         serializer = self.FilterSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
-        transactions = transaction_list(account_id=account_id,
-                                        filters=serializer.validated_data)
+        transactions = transaction_list(filters=serializer.validated_data)
 
         return get_paginated_response(pagination_class=self.Pagination,
                                       serializer_class=self.OutputSerializer,
