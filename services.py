@@ -9,7 +9,7 @@ def account_create(*, user_id: int, account_number: str, account_name: str) -> A
     user = get_object(User, id=user_id)
     account = Account(account_number=account_number,
                       account_name=account_name,
-                      user_id=user)
+                      user=user)
 
     account.full_clean()
     account.save()
