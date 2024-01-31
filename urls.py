@@ -16,10 +16,10 @@ ledger_patterns = [
     path('/account/<int:account_id>/delete', AccountDeleteAPI.as_view(), name='ledger_delete'),
 
     path('transactions/list', TransactionListAPI.as_view(), name='ledger_transactions_list'),
-    path('<int:account_id>/transactions/create',
+    path('account/<int:account_id>/transactions/create',
          TransactionCreateAPI.as_view(), name='ledger_transactions_create'),
-    path('<int:account_id>/transactions/<int:transaction_id>/update',
+    path('account/<int:account_id>/transactions/<int:transaction_id>/update',
          TransactionUpdateApi.as_view(), name='ledger_transactions_update'),
-    path('<int:account_id>/transactions/<int:transaction_id>/delete',
+    path('account/<int:account_id>/transactions/<int:transaction_id>/delete',
          TransactionDeleteAPI.as_view(), name='ledger_transactions_delete'),
 ]
