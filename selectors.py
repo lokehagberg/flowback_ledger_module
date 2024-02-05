@@ -12,14 +12,19 @@ class BaseAccountFilter(django_filters.FilterSet):
 
     class Meta:
         model = Account
-        fields = dict(id=['exact'],)
+        fields = {
+            'id': ['exact'],
+        }
 
 
 def account_list(*, user: User, filters=None):
     filters = filters or {}
 
     qs = Account.objects.filter(user=user).all()
-    return BaseAccountFilter(filters, qs).qs
+
+    filtered_qs = BaseAccountFilter(filters, qs).qs
+
+    return filtered_qs
 
 
 class BaseTransactionFilter(django_filters.FilterSet):
@@ -30,26 +35,30 @@ class BaseTransactionFilter(django_filters.FilterSet):
                 ('-date', 'date_desc'))
     )
 
+    date_after = django_filters.DateFilter(field_name='date', lookup_expr='gt')
+    date_before = django_filters.DateFilter(field_name='date', lookup_expr='lt')
+
     class Meta:
         model = Transaction
-        fields = dict(id=['exact'],
-                   account_id=['exact'], 
-        )
+        fields = {
+            'id': ['exact'],
+            'account_id': ['exact'],
+        }
+        extra = {
+            'date_after': {'lookup_expr': 'gt'},
+            'date_before': {'lookup_expr': 'lt'},
+        }
         
 
 
+# Modify the transaction_list function
 def transaction_list(*, user: User, filters=None):
-    
     filters = filters or {}
 
-    qs = Transaction.objects.all()
+    qs = Transaction.objects.filter().all()
 
     # Apply custom filters using BaseTransactionFilter
     filtered_qs = BaseTransactionFilter(filters, qs).qs
 
     return filtered_qs
-    
-    # filters = filters or {}
 
-    # qs = Transaction.objects.filter(account__user=user).all()
-    # return BaseTransactionFilter(filters, qs).qs
