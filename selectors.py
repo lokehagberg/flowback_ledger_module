@@ -28,10 +28,23 @@ class BaseTransactionFilter(django_filters.FilterSet):
 
     class Meta:
         model = Transaction
-        fields = dict(id=['exact'],)
+        fields = dict(id=['exact'],
+                   account_id=['exact'], 
+        )
+        
 
 def transaction_list(*, filters=None):
+    
     filters = filters or {}
 
-    qs = Transaction.objects.filter().all()
-    return BaseTransactionFilter(filters, qs).qs
+    qs = Transaction.objects.all()
+
+    # Apply custom filters using BaseTransactionFilter
+    filtered_qs = BaseTransactionFilter(filters, qs).qs
+
+    return filtered_qs
+    
+    # filters = filters or {}
+
+    # qs = Transaction.objects.filter().all()
+    # return BaseTransactionFilter(filters, qs).qs
