@@ -38,12 +38,17 @@ class BaseTransactionFilter(django_filters.FilterSet):
     date_after = django_filters.DateFilter(field_name='date', lookup_expr='gt')
     date_before = django_filters.DateFilter(field_name='date', lookup_expr='lt')
 
+    description = django_filters.CharFilter(
+        field_name='description',
+        lookup_expr='icontains' 
+    )
+
     class Meta:
         model = Transaction
         fields = {
             'id': ['exact'],
             'account_id': ['exact'],
-            'description': ['exact'],
+            'description': ['icontains'],
         }
         extra = {
             'date_after': {'lookup_expr': 'gt'},
