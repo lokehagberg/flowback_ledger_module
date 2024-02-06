@@ -43,6 +43,7 @@ class BaseTransactionFilter(django_filters.FilterSet):
         fields = {
             'id': ['exact'],
             'account_id': ['exact'],
+            'description': ['exact'],
         }
         extra = {
             'date_after': {'lookup_expr': 'gt'},

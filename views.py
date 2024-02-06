@@ -90,7 +90,9 @@ class TransactionListAPI(APIView):
         account_id = serializers.IntegerField(required=False)
         order_by = serializers.CharField(required=False)
         id = serializers.IntegerField(required=False)
-        date_before = serializers.DateField(required=True)
+        date_after = serializers.DateField(required=False)
+        date_before = serializers.DateField(required=False)
+        description = serializers.CharField(required=False)
 
     class OutputSerializer(serializers.Serializer):
         account = AccountSerializer()
