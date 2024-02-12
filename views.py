@@ -87,16 +87,16 @@ class TransactionListAPI(APIView):
         max_limit = 100
 
     class FilterSerializer(serializers.Serializer):
-        account_id = serializers.IntegerField(required=False)
+        account_ids = serializers.ListField(child=serializers.IntegerField(), required=False)
         order_by = serializers.CharField(required=False)
         id = serializers.IntegerField(required=False)
         date_after = serializers.DateField(required=False)
         date_before = serializers.DateField(required=False)
         description = serializers.CharField(required=False)
+        accounts = serializers.CharField(required=False)
 
     class OutputSerializer(serializers.Serializer):
         account = AccountSerializer()
-
         id = serializers.IntegerField()
         debit_amount = serializers.FloatField()
         credit_amount = serializers.FloatField()
@@ -108,6 +108,11 @@ class TransactionListAPI(APIView):
         serializer = self.FilterSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
         
+        account_ids = serializer.data.get('account_ids')
+        print(account_ids)
+        # if account_ids:
+        #     filters['account_ids'] = account_ids
+
         transactions = transaction_list(filters=serializer.validated_data, user=request.user)
 
         return get_paginated_response(pagination_class=self.Pagination,

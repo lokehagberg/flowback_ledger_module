@@ -43,11 +43,20 @@ class BaseTransactionFilter(django_filters.FilterSet):
         lookup_expr='icontains' 
     )
 
+    account_ids = django_filters.CharFilter(
+        method='filter_by_accounts'
+    )
+
+    def filter_by_accounts(self, queryset, name, value):
+        account_ids = value.split(',')  # Split the value by comma to get a list of account IDs
+        print(account_ids)
+        return queryset.filter(account__id__in=account_ids)
+
     class Meta:
         model = Transaction
         fields = {
             'id': ['exact'],
-            'account_id': ['exact'],
+            # 'account_ids': [],
             'description': ['icontains'],
         }
         extra = {
