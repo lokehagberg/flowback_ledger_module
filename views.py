@@ -106,14 +106,20 @@ class TransactionListAPI(APIView):
 
     def get(self, request):
         serializer = self.FilterSerializer(data=request.query_params)
+        print("GEEEET", serializer)
         serializer.is_valid(raise_exception=True)
         
-        account_ids = serializer.data.get('account_ids')
-        print(account_ids)
+        account_ids = serializer.validated_data.get('account_ids', [])
+        
         # if account_ids:
         #     filters['account_ids'] = account_ids
 
-        transactions = transaction_list(filters=serializer.validated_data, user=request.user)
+
+        # transactions = transaction_list(filters=serializer.validated_data, user=request.user)
+        transactions = Transaction.objects.all()
+        if account_ids:
+            transactions = transactions.filter(account_id__in=account_ids)
+        print(account_ids)
 
         return get_paginated_response(pagination_class=self.Pagination,
                                       serializer_class=self.OutputSerializer,

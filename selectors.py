@@ -3,7 +3,6 @@ import django_filters
 from flowback.user.models import User
 from flowback_addon.ledger.models import Account, Transaction
 
-
 class BaseAccountFilter(django_filters.FilterSet):
     order_by = django_filters.OrderingFilter(
         fields=(('created_at', 'created_at_asc'),
@@ -48,9 +47,10 @@ class BaseTransactionFilter(django_filters.FilterSet):
     )
 
     def filter_by_accounts(self, queryset, name, value):
-        account_ids = value.split(',')  # Split the value by comma to get a list of account IDs
-        print(account_ids)
-        return queryset.filter(account__id__in=account_ids)
+        # Filter out non-integer values
+        # account_ids = [int(id) for id in value.split(',') if id.isdigit()]
+        print(value, value.split(',')[0], "IDDDEEE")
+        return queryset.filter(account__id__in=value.split(','))
 
     class Meta:
         model = Transaction
