@@ -21,3 +21,5 @@ addon_patterns = [
 ```
 
 2) Add `INTEGRATIONS=flowback_addon.ledger` to flowback .env file (if you already have an integration, you can separate them using `,` (without space))
+
+3) Rename the folder 'flowback_ledger_module' to 'ledger'
