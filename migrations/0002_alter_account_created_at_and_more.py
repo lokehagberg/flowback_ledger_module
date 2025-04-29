@@ -7,7 +7,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ledger', '0001_initial'),
+        ('flowback_ledger_module', '0001_initial'),
     ]
 
     operations = [

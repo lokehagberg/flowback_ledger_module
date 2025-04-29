@@ -2,16 +2,16 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from flowback_addon.ledger.models import Account, Transaction
-from flowback_addon.ledger.selectors import account_list, transaction_list
-from flowback_addon.ledger.serializers import AccountSerializer
+from .models import Account, Transaction
+from .selectors import account_list, transaction_list
+from .serializers import AccountSerializer
 
-from flowback_addon.ledger.services import (account_create,
-                                      account_update,
-                                      account_delete,
-                                      transaction_create,
-                                      transaction_update,
-                                      transaction_delete)
+from .services import (account_create,
+                       account_update,
+                       account_delete,
+                       transaction_create,
+                       transaction_update,
+                       transaction_delete)
 from flowback.common.pagination import LimitOffsetPagination, get_paginated_response
 
 
@@ -108,12 +108,11 @@ class TransactionListAPI(APIView):
         serializer = self.FilterSerializer(data=request.query_params)
         print("GEEEET", serializer)
         serializer.is_valid(raise_exception=True)
-        
+
         account_ids = serializer.validated_data.get('account_ids', [])
-        
+
         # if account_ids:
         #     filters['account_ids'] = account_ids
-
 
         # transactions = transaction_list(filters=serializer.validated_data, user=request.user)
         transactions = Transaction.objects.all()

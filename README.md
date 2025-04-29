@@ -13,7 +13,7 @@ It is a decision making platform.
 ```py
 from django.urls import path, include
 
-from flowback_addon.ledger.urls import ledger_patterns
+from flowback_addon.flowback_ledger_module.urls import ledger_patterns
 
 addon_patterns = [
      path('ledger/', include((ledger_patterns, 'ledger')))
@@ -21,5 +21,3 @@ addon_patterns = [
 ```
 
 2) Add `INTEGRATIONS=flowback_addon.ledger` to flowback .env file (if you already have an integration, you can separate them using `,` (without space))
-
-3) Rename the folder 'flowback_ledger_module' to 'ledger'

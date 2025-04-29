@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.test import TestCase
-from flowback_addon.ledger.models import Account, Transaction
+from .models import Account, Transaction
 
 from flowback.user.models import User
 

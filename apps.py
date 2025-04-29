@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class LedgerConfig(AppConfig):
-    name = 'flowback_addon.ledger'
+class FlowbackLedgerModuleConfig(AppConfig):
+    name = 'flowback_addon.flowback_ledger_module'

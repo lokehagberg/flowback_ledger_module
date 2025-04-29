@@ -1,7 +1,7 @@
 import django_filters
 
 from flowback.user.models import User
-from flowback_addon.ledger.models import Account, Transaction
+from .models import Account, Transaction
 
 class BaseAccountFilter(django_filters.FilterSet):
     order_by = django_filters.OrderingFilter(

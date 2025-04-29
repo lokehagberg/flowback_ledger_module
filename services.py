@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flowback.common.services import model_update, get_object
-from flowback_addon.ledger.models import Account, Transaction
+from .models import Account, Transaction
 from flowback.user.models import User
 
 
